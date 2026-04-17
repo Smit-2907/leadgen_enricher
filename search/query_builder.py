@@ -5,7 +5,7 @@ Returns raw DiscoveredURL objects for the matching engine.
 import asyncio
 import re
 from typing import List
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 from search.models import BusinessInput, DiscoveredURL, Country
 from search.utils import random_ua, jitter
 
