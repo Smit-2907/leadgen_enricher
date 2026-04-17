@@ -18,10 +18,10 @@ PLATFORM_DOMAINS = {
 }
 
 SCORE_WEIGHTS = {
-    "phone_match": 0.40,
-    "name_in_url": 0.25,
-    "name_title_sim": 0.20,
-    "city_match": 0.10,
+    "phone_match": 0.45,    # Increased
+    "city_match": 0.30,     # TRIPLED (CRITICAL)
+    "name_in_url": 0.10,    # Reduced
+    "name_title_sim": 0.10, # Reduced
     "domain_match": 0.05,
 }
 
@@ -68,24 +68,33 @@ def score_url(url_result: DiscoveredURL, biz: BusinessInput) -> Tuple[Discovered
     sn = biz.short_name()
 
     score = 0.0
+    combined_text_low = combined_text.lower()
+    city_low = biz.city.lower()
 
-    # Phone match (strongest signal)
+    # 1. Phone match (strongest signal)
     if biz.phone and _phone_in_text(biz.phone, combined_text):
         score += SCORE_WEIGHTS["phone_match"]
 
-    # Name in URL slug
+    # 2. Hard City Match
+    if city_low in combined_text_low:
+        score += SCORE_WEIGHTS["city_match"]
+    else:
+        # PENALTY: If result title mentions a different state/country keyword
+        # that definitely isn't the target location, kill the score.
+        conflict_keywords = ["chicago", "lebanon", "michigan", "syria", "brooklyn"] # Examples
+        if any(k in combined_text_low for k in conflict_keywords if k not in city_low):
+            url_result.confidence = 0.0
+            return url_result, 0.0
+
+    # 3. Name in URL slug
     url_slug_score = max(_slug_overlap(cn, url_result.url), _slug_overlap(sn, url_result.url))
     score += SCORE_WEIGHTS["name_in_url"] * url_slug_score
 
-    # Name similarity with snippet title
+    # 4. Name similarity with snippet title
     title_score = max(_name_similarity(cn, combined_text[:200]), _name_similarity(sn, combined_text[:200]))
     score += SCORE_WEIGHTS["name_title_sim"] * title_score
 
-    # City in snippet
-    if biz.city.lower() in combined_text.lower():
-        score += SCORE_WEIGHTS["city_match"]
-
-    # Website/domain match
+    # 5. Website/domain match
     if biz.website and get_domain(biz.website) in get_domain(url_result.url):
         score += SCORE_WEIGHTS["domain_match"]
 

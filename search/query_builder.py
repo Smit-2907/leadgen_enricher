@@ -5,7 +5,7 @@ Returns raw DiscoveredURL objects for the matching engine.
 import asyncio
 import re
 from typing import List
-from ddgs import DDGS
+from duckduckgo_search import DDGS
 from search.models import BusinessInput, DiscoveredURL, Country
 from search.utils import random_ua, jitter
 
@@ -35,11 +35,10 @@ def _build_queries(biz: BusinessInput) -> List[dict]:
     phone = biz.phone or ""
     queries = []
 
-    # Core email-hunting queries
     queries += [
         {"q": f'"{cn}" "{city}" contact email', "intent": "email"},
-        {"q": f'"{cn}" "{city}" "@gmail.com" OR "@yahoo.com"', "intent": "email"},
-        {"q": f'"{sn}" "{city}" email', "intent": "email"},
+        {"q": f'"{cn}" "{city}" email', "intent": "email"},
+        {"q": f'"{cn}" "{city}" @gmail.com', "intent": "email"},
     ]
 
     # Phone-based cross reference
@@ -60,8 +59,13 @@ def _build_queries(biz: BusinessInput) -> List[dict]:
     dirs = COUNTRY_DIRECTORIES.get(biz.country, COUNTRY_DIRECTORIES["unknown"])
     site_query = " OR ".join([f"site:{d}" for d in dirs[:3]])
     queries.append({"q": f'({site_query}) "{cn}" "{city}"', "intent": "directory"})
-    if sn != cn:
-        queries.append({"q": f'({site_query}) "{sn}" "{city}"', "intent": "directory"})
+    
+    # NEW: Specific platform deep-links for the exact location
+    queries.append({"q": f'site:yelp.com "{cn}" "{city}"', "intent": "directory"})
+    queries.append({"q": f'site:yellowpages.com "{cn}" "{city}"', "intent": "directory"})
+
+    if phone:
+        queries.append({"q": f'"{phone}" "{cn}"', "intent": "phone"})
 
     return queries
 
