@@ -1,0 +1,59 @@
+
+STRESS TEST: Mahesh Lunch Home
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/phone_lookup.py:17: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/youtube_scraper.py:17: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+SocialScraper error for https://www.zomato.com/pune/mahesh-lunch-home-camp-area: Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.zomato.com/pune/mahesh-lunch-home-camp-area
+Call log:
+  - navigating to "https://www.zomato.com/pune/mahesh-lunch-home-camp-area", waiting until "networkidle"
+
+Emails: []
+Socials Count: 1
+ - linkedin: https://www.zomato.com/pune/mahesh-lunch-home-camp-area
+
+STRESS TEST: Sunrise Dental Clinic
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+Emails: ['your.email@example.com', 'sunrisedental817@gmail.com']
+Socials Count: 0
+
+STRESS TEST: The Burger Barn Cafe
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/search_engines.py:50: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+/home/smitsolanki/Desktop/main/POC/leadgen_enricher/scrapers/youtube_scraper.py:17: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS(headers={"User-Agent": get_random_user_agent()}) as ddgs:
+Emails: []
+Socials Count: 0
