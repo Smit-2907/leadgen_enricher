@@ -87,17 +87,40 @@ async def resolve_identity(
     # 6. Classify social URLs from ranked results
     social_urls: dict[str, Optional[str]] = {p: None for p in PLATFORM_DOMAINS}
     directory_urls = []
+    discovered_website = None
+
+    # Get known directory domains for the country to avoid treating them as the "Official Website"
+    directories_to_skip = [
+        "yelp.", "justdial.", "yellowpages.", "facebook.", "instagram.", "linkedin.", 
+        "twitter.", "youtube.", "indiamart.", "sulekha.", "manta.", "tradeindia.",
+        "cybo.", "worldorgs.", "lentlo.", "asklaila.", "local.google.", "mapping.",
+        "tripadvisor.", "crunchbase.", "glassdoor.", "zoominfo.", "apollo.io"
+    ]
 
     for r in ranked:
         url_lower = r.url.lower()
-        placed = False
+        placed_as_social = False
+        
+        # 6a. Try to place as a social platform
         for platform, domain in PLATFORM_DOMAINS.items():
             if domain in url_lower and not is_noise_url(r.url):
                 if social_urls[platform] is None:
                     social_urls[platform] = r.url
-                    placed = True
+                    placed_as_social = True
                     break
-        if not placed and r.confidence >= 0.15:
+        
+        if placed_as_social:
+            continue
+
+        # 6b. Try to identify as an "Official Website" candidate
+        # It must have high confidence and not be a known directory or social network
+        if not discovered_website and r.confidence >= 0.25:
+             is_directory = any(d in url_lower for d in directories_to_skip)
+             if not is_directory:
+                 discovered_website = r.url
+
+        # 6c. Place as a directory result
+        if r.confidence >= 0.15:
             directory_urls.append(r.url)
 
     output.socials = social_urls
@@ -106,11 +129,17 @@ async def resolve_identity(
         sources_used.append("directories")
 
     # 7. Scrape website in parallel with top social profiles
+    # If the user didn't provide a website, but we found one that looks like an official site, use it!
+    target_website = website or discovered_website
+    
     tasks_meta = []
     coros = []
-    if website:
+    
+    if target_website:
+        if not website:
+            sources_used.append("website_discovery")
         tasks_meta.append("website")
-        coros.append(asyncio.wait_for(scrape_website(website), timeout=20.0))
+        coros.append(asyncio.wait_for(scrape_website(target_website), timeout=20.0))
     for platform, url in social_urls.items():
         if url:
             tasks_meta.append(f"social:{platform}")
@@ -136,12 +165,28 @@ async def resolve_identity(
                     sources_used.append(f"bio_scrape:{label.split(':')[1]}")
 
     # 8. Email guessing from domain (last resort)
-    if not output.emails and website:
-        guessed = await guess_emails(website)
+    if not output.emails and target_website:
+        guessed = await guess_emails(target_website)
         if guessed:
             output.emails = guessed[:3]  # top 3 guesses
             output.confidence["guessed_emails"] = 0.3
             sources_used.append("email_guesser")
+
+    # 8b. NO-WEBSITE ENRICHMENT SERVICE
+    if not output.emails and website is None:
+        from pipelines.no_website_enrichment import no_website_enrichment as run_enrichment
+        enrich_res = await run_enrichment(business_name, city, phone)
+        if enrich_res.get("emails"):
+            # Take best result for main email, store others
+            top_emails = [e["value"] for e in enrich_res["emails"]]
+            output.emails.extend(top_emails)
+            output.confidence["no_website_enrichment"] = enrich_res.get("confidence_score", 0.0)
+            sources_used.append("no_website_enrichment")
+            
+            # Map socials if found
+            for s in enrich_res.get("socials", []):
+                if output.socials.get(s["platform"]) is None:
+                    output.socials[s["platform"]] = s["url"]
 
     # 9. Finalize reasoning & confidence
     output.emails = sorted(set(output.emails))

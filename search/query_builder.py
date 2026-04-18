@@ -36,6 +36,7 @@ def _build_queries(biz: BusinessInput) -> List[dict]:
     queries = []
 
     queries += [
+        {"q": f'"{cn}" "{city}" official website', "intent": "website"},
         {"q": f'"{cn}" "{city}" contact email', "intent": "email"},
         {"q": f'"{cn}" "{city}" email', "intent": "email"},
         {"q": f'"{cn}" "{city}" @gmail.com', "intent": "email"},
